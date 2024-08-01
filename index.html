@@ -8,58 +8,15 @@
 </head>
 <body>
     <h1>Fingerprint Attendance System</h1>
-    <button id="registerBtn">Register Fingerprint</button>
-    <button id="loginBtn">Log In with Fingerprint</button>
+    <form action="process.php" method="POST">
+        <button type="submit" name="register" id="registerBtn">Register Fingerprint</button>
+        <button type="submit" name="login" id="loginBtn">Log In with Fingerprint</button>
+    </form>
 
     <script>
-        // Check if the WebAuthn API is available
+        // WebAuthn functionality can still be included here for interaction with the server
         if (window.PublicKeyCredential) {
-            // Register a new credential
-            async function register() {
-                try {
-                    // Example public key options
-                    const publicKey = {
-                        challenge: new Uint8Array(32),
-                        rp: {
-                            name: "Example Company"
-                        },
-                        user: {
-                            id: new Uint8Array(16),
-                            name: "user@example.com",
-                            displayName: "User"
-                        },
-                        pubKeyCredParams: [{ type: "public-key", alg: -7 }]
-                    };
-                    
-                    const credential = await navigator.credentials.create({ publicKey });
-                    console.log("Registration successful:", credential);
-                } catch (err) {
-                    console.error("Error during registration:", err);
-                }
-            }
-
-            // Authenticate using a credential
-            async function authenticate() {
-                try {
-                    // Example public key request options
-                    const publicKey = {
-                        challenge: new Uint8Array(32),
-                        allowCredentials: [{
-                            id: new Uint8Array(16),
-                            type: "public-key"
-                        }],
-                        userVerification: "preferred"
-                    };
-                    
-                    const assertion = await navigator.credentials.get({ publicKey });
-                    console.log("Authentication successful:", assertion);
-                } catch (err) {
-                    console.error("Error during authentication:", err);
-                }
-            }
-
-            document.getElementById('registerBtn').addEventListener('click', register);
-            document.getElementById('loginBtn').addEventListener('click', authenticate);
+            // WebAuthn API code can be added here if needed
         } else {
             console.log("WebAuthn API not supported on this browser.");
         }
