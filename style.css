@@ -3,9 +3,41 @@ body {
     text-align: center;
     margin: 0;
     padding: 20px;
+    background-color: #f0f0f0;
 }
+
+h1 {
+    color: #333;
+    margin-bottom: 20px;
+}
+
 button {
     padding: 10px 20px;
     margin: 10px;
     font-size: 16px;
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+/* Footer styles */
+footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    text-align: center;
+    padding: 10px 0;
+    background-color: #f0f0f0;
+}
+
+footer p {
+    color: brown;
+    font-size: 18px;
+    margin: 0;
 }
