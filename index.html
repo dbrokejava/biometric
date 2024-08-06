@@ -5,6 +5,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Fingerprint Attendance</title>
     <link rel="stylesheet" href="style.css">
+    <style>
+        footer {
+            text-align: center;
+            margin-top: 20px;
+        }
+        #continueBtn {
+            display: block;
+            margin: 10px auto;
+            padding: 10px 20px;
+            background-color: lightgray;
+            border: none;
+            cursor: pointer;
+        }
+        #continueBtn:hover {
+            background-color: darkgray;
+        }
+    </style>
 </head>
 <body>
     <h1>Fingerprint Attendance System</h1>
@@ -13,10 +30,13 @@
 
     <!-- Footer section -->
     <footer>
-        <p>Triumphant College Boot Camp</p>
+        <button id="continueBtn">Continue</button>
+        <p style="color: brown;">Triumphant College Boot Camp</p>
     </footer>
 
     <script>
+        let registeredCredential = null;
+
         // Check if the WebAuthn API is available
         if (window.PublicKeyCredential) {
             // Register a new credential
@@ -37,37 +57,29 @@
                     };
                     
                     const credential = await navigator.credentials.create({ publicKey });
+                    registeredCredential = credential; // Store the registered credential
                     console.log("Registration successful:", credential);
                 } catch (err) {
                     console.error("Error during registration:", err);
                 }
             }
 
-            // Authenticate using a credential
-            async function authenticate() {
-                try {
-                    // Example public key request options
-                    const publicKey = {
-                        challenge: new Uint8Array(32),
-                        allowCredentials: [{
-                            id: new Uint8Array(16),
-                            type: "public-key"
-                        }],
-                        userVerification: "preferred"
-                    };
-                    
-                    const assertion = await navigator.credentials.get({ publicKey });
-                    console.log("Authentication successful:", assertion);
-                } catch (err) {
-                    console.error("Error during authentication:", err);
-                }
-            }
-
+            // Event listeners
             document.getElementById('registerBtn').addEventListener('click', register);
-            document.getElementById('loginBtn').addEventListener('click', authenticate);
-        } else {
-            console.log("WebAuthn API not supported on this browser.");
-        }
+
+            // Directly redirect on login button click
+            document.getElementById('loginBtn').addEventListener('click', function() {
+                window.location.href = 'registration.html';
+            });
+
+        } 
+
+        // Continue button event listener
+        document.getElementById('continueBtn').addEventListener('click', function() {
+            const dateTime = new Date().toISOString();
+            localStorage.setItem('continueDateTime', dateTime);
+            window.location.href = 'login-success.html';
+        });
     </script>
 </body>
 </html>

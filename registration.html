@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        form {
+            max-width: 400px;
+            margin: 20px auto;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        input, button {
+            display: block;
+            margin: 10px 0;
+            width: 100%;
+            padding: 10px;
+            box-sizing: border-box;
+        }
+        button {
+            background-color: lightgray;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: darkgray;
+        }
+    </style>
+</head>
+<body>
+    <h1>Register Your Details</h1>
+    <form id="registrationForm">
+        <input type="text" id="name" placeholder="Name" required>
+        <input type="text" id="studentNumber" placeholder="Student Number" required>
+        <input type="text" id="cellphoneNumber" placeholder="Cellphone Number" required>
+        <button type="button" id="homeBtn">Home</button>
+        <button type="button" id="fingerprintBtn">Scan Fingerprint</button>
+        <button type="button" id="doneBtn">Done</button>
+    </form>
+
+    <script>
+        document.getElementById('homeBtn').addEventListener('click', function() {
+            window.location.href = 'index.html';
+        });
+
+        document.getElementById('fingerprintBtn').addEventListener('click', async function() {
+            if (window.PublicKeyCredential) {
+                try {
+                    const publicKey = {
+                        challenge: new Uint8Array(32),
+                        rp: {
+                            name: "Example Company"
+                        },
+                        user: {
+                            id: new Uint8Array(16),
+                            name: "user@example.com",
+                            displayName: "User"
+                        },
+                        pubKeyCredParams: [{ type: "public-key", alg: -7 }]
+                    };
+                    
+                    const credential = await navigator.credentials.create({ publicKey });
+                    console.log("Fingerprint scan successful:", credential);
+                    alert("Fingerprint scan successful");
+                } catch (err) {
+                    console.error("Error during fingerprint scan:", err);
+                    alert("Error during fingerprint scan");
+                }
+            } else {
+                console.log("WebAuthn API not supported on this browser.");
+            }
+        });
+
+        document.getElementById('doneBtn').addEventListener('click', function() {
+            alert("Registration successful");
+        });
+    </script>
+</body>
+</html>

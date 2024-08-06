@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Successful</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+        button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: lightgray;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: darkgray;
+        }
+        table {
+            margin-top: 20px;
+            border-collapse: collapse;
+            width: 50%;
+        }
+        table, th, td {
+            border: 1px solid black;
+        }
+        th, td {
+            padding: 10px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <h1>Login Successful</h1>
+    <table>
+        <tr>
+            <th>NAME</th>
+            <th>STUDENT NUMBER</th>
+            <th>DATE AND TIME CLOCKED IN</th>
+            <th>CELLPHONE NUMBER</th>
+        </tr>
+        <tr>
+            <td>Dino Geiseb</td>
+            <td>2022039292</td>
+            <td id="datetimeCell">Row 1, Col 3</td>
+            <td>0817112538</td>
+        </tr>
+        <tr>
+            <td>  </td>
+            <td>  </td>
+            <td>  </td>
+            <td>  </td>
+        </tr>
+    </table>
+    <button id="backBtn">Back</button>
+
+    <script>
+        document.getElementById('backBtn').addEventListener('click', function() {
+            window.location.href = 'index.html';
+        });
+
+        // Retrieve the stored date and time
+        const dateTime = localStorage.getItem('continueDateTime');
+        if (dateTime) {
+            document.getElementById('datetimeCell').textContent = new Date(dateTime).toLocaleString();
+        }
+    </script>
+</body>
+</html>
